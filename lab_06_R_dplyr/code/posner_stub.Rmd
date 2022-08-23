@@ -1,0 +1,28 @@
+---
+title: "Posner Cueing"
+author: "<your name here>"
+date: "3/5/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Lab 06, PSY 301
+Analysis of posner cueing data!
+
+```{r libraries}
+# Get useful libraries
+library(dplyr)
+```
+
+Slightly different loading of data:
+
+```{r loading}
+data = read.table('../data/posner_cueing.2021-03-04-0524.data.e2679654-e2a8-4c32-a046-fbfe32992006.txt', col.names = c('cue_position', 'target_position', 'cue_validity', 'cued_str', 'cued_binary', 'rt', 'correct'))
+
+```
+
+Add your own code here to make a bar plot of the mean for each condition (valid & invalid cues!)
+

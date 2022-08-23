@@ -1,0 +1,69 @@
+---
+title: "Invisibility cloak analysis"
+author: "Mark Lescroart"
+date: "3/4/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+This is a demo analysis of the (made up) invisibility cloak data. This code file should live within a folder called lab_06_R_dplyr/ on your computer. The full file structure should be: 
+
+```
+lab_06_R_dplyr/
+├── code
+│   └── invisibility_cloak_analysis.Rmd
+├── data
+│   ├── invisibility_cloak_btw_subj.xlsx
+│   ├── invisibility_cloak_within_subj.xlsx
+│   └── posner_cueing.2021-03-04-0524.data.e2679654-e2a8-4c32-a046-fbfe32992006.txt
+├── figures
+└── lab_06_R_dplyr.Rproj
+```
+
+To run this code, you should have opened `lab_06_R_dplyr.Rproj` with RStudio.
+
+In order for this demo to run correctly, you will need to install the tidyverse package for RStudio (if you haven't already). This just means calling the following line at a terminal:
+
+`install.packages(tidyverse)`
+
+Here we go with the demo!
+
+```{r libraries}
+# Get useful libraries
+library(dplyr)
+library(readxl)
+```
+
+Here is the loading of the data. 
+
+```{r loading}
+data_btw <- readxl::read_excel('../data/invisibility_cloak_btw_subj.xlsx')
+data_within <- readxl::read_excel('../data/invisibility_cloak_within_subj.xlsx')
+
+#View(data_btw)
+#View(data_within)
+```
+
+Next, we will use functions from the dplyr library to compute the means by condition. 
+
+```{r analysis}
+cond_means_btw = data_btw %>% 
+  group_by(condition) %>% 
+  summarize(grp_means=mean(n_mischief), n_participants=n())
+
+cond_means_within = data_within %>% 
+  group_by(condition) %>% 
+  summarize(grp_means=mean(n_mischief), n_participants=n())
+
+#View(cond_means_within)
+
+barplot(cond_means_within$grp_means, names.arg = cond_means_within$condition, ylab = 'Mean acts of mischief', main= 'Within Subject Design')
+
+barplot(cond_means_btw$grp_means, names.arg = cond_means_btw$condition, ylab = 'Mean acts of mischief', main= 'Between Subject Design')
+
+
+```
+
